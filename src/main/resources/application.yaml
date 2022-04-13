@@ -1,0 +1,43 @@
+keycloak:
+  authServerUrl: http://localhost:8484/auth
+  realm: crm_realm
+  resource: crm_admin
+  credentials:
+    secret: S63XNDWRT8i4DlsKhBgTJdO94V3GP21M
+
+spring:
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:postgresql://localhost:5432/crm?defaultSchema=crm
+    username: crm_admin
+    password: crm_admin
+    hikari:
+      auto-commit: false
+      schema: crm
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
+    database: POSTGRESQL
+    show-sql: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate.connection.provider_disables_autocommit: true
+      hibernate.cache.use_second_level_cache: false
+      hibernate.cache.use_query_cache: false
+      hibernate.generate_statistics: false
+      hibernate.temp.use_jdbc_metadata_defaults: false
+
+  liquibase:
+    change-log: classpath:db/brain-changelog.xml
+    enabled: true
+    liquibase-schema: crm
+    parameters:
+      podcast.grant-reading-to: crm
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${keycloak.authServerUrl}/realms/${keycloak.realm}
+          jwk-set-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs

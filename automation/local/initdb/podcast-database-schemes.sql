@@ -1,0 +1,8 @@
+
+CREATE USER crm_admin WITH PASSWORD 'crm_admin';
+CREATE SCHEMA IF NOT EXISTS crm;
+ALTER SCHEMA crm OWNER TO crm_admin;
+
+CREATE USER keycloak WITH PASSWORD 'keycloak';
+CREATE SCHEMA IF NOT EXISTS keycloak;
+ALTER SCHEMA keycloak OWNER TO keycloak;

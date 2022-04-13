@@ -1,0 +1,50 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+    <changeSet author="karpeikin" id="1616995484582-1">
+        <createTable tableName="fintes_client" remarks="Пользователи">
+
+            <column autoIncrement="true" name="member_ship_number" type="INTEGER"
+                    remarks="Номер абонемента">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="fintes_client_pkey"/>
+            </column>
+
+            <column name="last_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="sur_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="midle_name" type="VARCHAR(255)"/>
+
+            <column name="phone" type="VARCHAR(12)"/>
+
+            <column name="mail" type="VARCHAR(100)"/>
+
+            <column name="telegram_id" type="VARCHAR(100)" remarks="Идентификатор клиента в телеграмме"/>
+
+            <column name="member_ship_date_start" type="TIMESTAMPTZ" remarks="Дата начала действия абонемента"/>
+
+            <column name="member_ship_date_end" type="TIMESTAMPTZ" remarks="Дата окончания действия абонемента"/>
+
+            <column name="create_date" type="TIMESTAMPTZ" remarks="Дата создания клиента"/>
+
+            <column name="is_active" type="BOOLEAN" remarks="Рабочий абонемент или нет"/>
+
+        </createTable>
+    </changeSet>
+    <changeSet author="karpeikin" id="1616995484582-2">
+        <createIndex indexName="fintes_client_is_active_ukey" tableName="fintes_client">
+            <column name="is_active"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="karpeikin" id="1616995484582-3">
+        <createIndex indexName="fintes_client_telegram_id_ukey" tableName="fintes_client" unique="true">
+            <column name="telegram_id"/>
+        </createIndex>
+    </changeSet>
+</databaseChangeLog>
